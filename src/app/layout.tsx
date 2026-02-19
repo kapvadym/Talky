@@ -5,6 +5,7 @@ import { ConvexAuthNextjsServerProvider } from "@convex-dev/auth/nextjs/server";
 import { ConvexClientProvider } from "@/components/convex-client-provider";
 
 import "./globals.css";
+import { CreateWorkspaceModal } from "@/features/workspaces/components/create-workspace-modal";
 
 
 const geistSans = Geist({
@@ -34,6 +35,7 @@ export default function RootLayout({
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
           <ConvexClientProvider>
+            <CreateWorkspaceModal />
             {children}
           </ConvexClientProvider>
         </body>
