@@ -48,6 +48,18 @@ export const WorkspaceSwitcher = () => {
             Active workspace
           </span>
         </DropdownMenuItem>
+        {filteredWorkspaces?.map((workspace) => (
+          <DropdownMenuItem
+            key={workspace._id}
+            className="cursor-pointer capitalize"
+            onClick={() => router.push(`/workspace/${workspace._id}`)}
+          >
+            <div>
+              {workspace.name.charAt(0).toUpperCase()}
+            </div>
+            {workspace.name}
+          </DropdownMenuItem>
+        ))}
         <DropdownMenuItem 
           className="cursor-pointer"
           onClick={() => setOpen(true)}
