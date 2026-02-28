@@ -67,9 +67,11 @@ export const WorkspaceHeader = ({ workspace, isAdmin }: WorkspaceHeaderProps) =>
       </div>
       
       <div className="flex items-center gap-0.5 shrink-0">
-        <Button variant="transparent" size="iconSm">
-          <ListFilter className="size-4" />
-        </Button>
+        <Hint label="Filter conversations" side="bottom">
+          <Button variant="transparent" size="iconSm">
+            <ListFilter className="size-4" />
+          </Button>
+        </Hint>
         <Hint label="New message" side="bottom">
           <Button variant="transparent" size="iconSm">
             <SquarePen className="size-4" />
