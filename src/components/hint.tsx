@@ -6,7 +6,6 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { Alice } from "next/font/google";
 
 interface HintProps {
   label: string;
