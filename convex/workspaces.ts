@@ -42,7 +42,7 @@ export const join = mutation({
       )
       .unique();
 
-    if(!existingMember) {
+    if(existingMember) {
       throw new Error("Already a member of this workspace");
     }
     
@@ -148,7 +148,7 @@ export const get = query({
       }
     }
 
-    return await ctx.db.query("workspaces").collect();
+    return workspaces;
    },
 });
 
