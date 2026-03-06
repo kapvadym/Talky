@@ -1,6 +1,10 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { TrashIcon } from "lucide-react";
 import { FaChevronDown } from "react-icons/fa";
+
+import { useChannelId } from "@/hooks/use-channel-id";
+
+import { useUpdateChannel } from "@/features/channels/api/use-update-channel";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -13,19 +17,38 @@ import {
   DialogClose,
   DialogFooter
 } from "@/components/ui/dialog";
+import { toast } from "sonner";
 
 interface HeaderProps {
   title: string
 }
 
 export const Header = ({ title }: HeaderProps) => {
+  const channelId = useChannelId();
+
   const [value, setValue] = useState(title);
   const [editOpen, setEditOpen] = useState(false);
+
+  const { mutate: updateChannel, isPending: isUpdatingChannel} = useUpdateChannel();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.replace(/\s+/g, "-").toLowerCase();
     setValue(value);
   };
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    updateChannel({ id: channelId, name: value }, {
+      onSuccess: () => {
+        toast.success("Channel updated");
+        setEditOpen(false);
+      },
+      onError: () => {
+        toast.error("Failed to update channel");
+      }
+    })
+  }
 
   return (
     <div className="bg-white border-b h-[49px] flex items-center px-4 overflow-hidden">
@@ -63,10 +86,10 @@ export const Header = ({ title }: HeaderProps) => {
                 <DialogHeader>
                   <DialogTitle>Rename this channel</DialogTitle>
                 </DialogHeader>
-                <form className="space-y-4">
+                <form onSubmit={handleSubmit} className="space-y-4">
                   <Input 
                     value={value}
-                    disabled={false}
+                    disabled={isUpdatingChannel}
                     onChange={handleChange}
                     required
                     autoFocus
@@ -76,11 +99,11 @@ export const Header = ({ title }: HeaderProps) => {
                   />
                   <DialogFooter>
                     <DialogClose asChild>
-                      <Button variant="outline" disabled={false}>
+                      <Button variant="outline" disabled={isUpdatingChannel}>
                         Cancel
                       </Button>
                     </DialogClose>
-                    <Button disabled={false}>
+                    <Button disabled={isUpdatingChannel}>
                       Save
                     </Button>
                   </DialogFooter>
