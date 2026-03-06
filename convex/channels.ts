@@ -34,6 +34,8 @@ export const create = mutation({
       name: parsedName,
       workspaceId: args.workspaceId,
     });
+
+    return channelId;
   },
 });
 
