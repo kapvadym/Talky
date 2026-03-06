@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { toast } from "sonner";
 import { Loader } from "lucide-react";
+import { useMemo, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import VerificationInput from "react-verification-input";
 
@@ -20,6 +21,14 @@ const JoinPage = ( ) => {
 
   const { mutate, isPending } = useJoin();
   const { data, isLoading } = useGetWorkspaceInfo({ id: workspaceId });
+
+  const isMember = useMemo(() => data?.isMember, [data?.isMember]);
+
+  useEffect(() => {
+    if(isMember) {
+      router.push(`/workspace/${workspaceId}`)
+    }
+  }, [isMember, router, workspaceId])
 
   const handleComplete = (value: string) => {
     mutate({ workspaceId, joinCode: value }, {
