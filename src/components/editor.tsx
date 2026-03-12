@@ -8,6 +8,7 @@ import { MutableRefObject, useEffect, useLayoutEffect, useRef, useState } from "
 import { cn } from "@/lib/utils";
 
 import { Hint } from "./hint";
+import { EmojiPopover } from "./emoji-popover";
 import { Button } from "./ui/button";
 
 import "quill/dist/quill.snow.css";
@@ -128,7 +129,13 @@ const Editor = ({
     if (toolbarElement) {
       toolbarElement.classList.toggle("hidden");
     }
-  }
+  };
+
+  const onEmojiSelect = (emoji: any) => {
+    const quill = quillRef.current;
+
+    quill?.insertText(quill?.getSelection()?.index || 0, emoji.native)
+  };
 
   const isEmpty = text.replace(/<(.|\n)*?>/g, "").trim().length === 0;
 
@@ -147,16 +154,15 @@ const Editor = ({
               <PiTextAa className="size-4" />
             </Button>
           </Hint>
-          <Hint label="Emoji">
+          <EmojiPopover onEmojiSelect={onEmojiSelect}>
             <Button
               disabled={disabled}
               size="iconSm"
               variant="ghost"
-              onClick={() => {}}
             >
               <Smile className="size-4" />
             </Button>
-          </Hint>
+          </EmojiPopover>
           {variant === "create" && (
             <Hint label="Image">
               <Button
