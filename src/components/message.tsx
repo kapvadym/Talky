@@ -2,6 +2,7 @@ import { format, isToday, isYesterday } from "date-fns";
 import dynamic from "next/dynamic";
 
 import { Hint } from "./hint";
+import { Thumbnail } from "./thumbnail";
 import { Avatar, AvatarImage, AvatarFallback } from "./ui/avatar";
 import { Doc, Id } from "../../convex/_generated/dataModel";
 
@@ -66,6 +67,7 @@ export const Message =({
           </Hint>
           <div className="">
             <Renderer value={body} />
+            <Thumbnail url={image} />
             {updatedAt ? (
               <span className="text-xs text-muted-foreground">
                 (edited)
@@ -103,6 +105,7 @@ export const Message =({
             </Hint>
           </div>
           <Renderer value={body} />
+          <Thumbnail url={image} />
           {updatedAt ? (
             <span className="text-xs text-muted-foreground">(edited)</span>
           ) : null}
