@@ -64,8 +64,15 @@ export const Message =({
               {format(new Date(createdAt), "hh:mm")}
             </button>
           </Hint>
+          <div className="">
+            <Renderer value={body} />
+            {updatedAt ? (
+              <span className="text-xs text-muted-foreground">
+                (edited)
+              </span>
+            ) : null}
+          </div>
         </div>
-        <Renderer value={body} />
       </div>
     );
   }
@@ -76,9 +83,9 @@ export const Message =({
     <div className="flex flex-col gap-2 p-1.5 px-5 hover:bg-gray-100/60 group relative">
       <div className="flex items-start gap-2">
         <button>
-          <Avatar className="size-5 rounded-md mr-1">
+          <Avatar className="rounded-md mr-1">
             <AvatarImage className="rounded-md" src={authorImage} />
-            <AvatarFallback className="rounded-md bg-sky-500 text-white text-xs">
+            <AvatarFallback>
               {avatarFallback}
             </AvatarFallback>
           </Avatar>
