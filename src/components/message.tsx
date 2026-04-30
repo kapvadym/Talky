@@ -2,8 +2,10 @@ import { format, isToday, isYesterday } from "date-fns";
 import dynamic from "next/dynamic";
 
 import { Hint } from "./hint";
+import { Toolbar } from "./toolbar";
 import { Thumbnail } from "./thumbnail";
 import { Avatar, AvatarImage, AvatarFallback } from "./ui/avatar";
+
 import { Doc, Id } from "../../convex/_generated/dataModel";
 
 const Renderer = dynamic(() => import("@/components/renderer"), { ssr: false });
@@ -111,6 +113,17 @@ export const Message =({
           ) : null}
         </div>
       </div>
+      {!isEditing && (
+        <Toolbar
+          isAuthor={isAuthor}
+          isPending={false}
+          handleEdit={() => setEditingId(id)}
+          handleThread={() => {}}
+          handleDelete={() => {}}
+          handleReaction={() => {}}
+          hideThreadButton={hideThreadButton}
+        />
+      )}
     </div>
   )
 };
